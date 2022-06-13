@@ -1,6 +1,7 @@
 import React, { createContext, useState }  from 'react';
 import * as auth from '../services/auth';
 import io from 'socket.io-client';
+import config from "../config";
 
 const AuthConext = createContext();
 
@@ -10,10 +11,19 @@ export const AuthProvider = ({ children }) => {
     var socket = null;
 
     function connectSocket(){
-        socket = io('http://localhost:4000', { transports : ['websocket'] })
+        socket = io.connect(config.apiAddr, { transports : ['websocket'] });
         socket.on('connect', ()=> {
-            //console.log('Socket Connected');
+            console.log('Socket Connected');
         });
+        socket.on('connect_error', err => {
+            console.log('entrei1');
+            console.log(err);
+        });
+        socket.on('connect_failed', err => {
+            console.log('entrei2');
+            console.log(err);
+        });
+       
     }
 
     function signIn(username, password) {
