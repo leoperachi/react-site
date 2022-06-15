@@ -174,7 +174,7 @@ iframe {
 
 .container1 {
   width: 100%;  
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh);
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
