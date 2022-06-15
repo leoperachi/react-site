@@ -8,7 +8,7 @@ class PageLoader extends React.Component {
                  <div className="pl-container" hidden={this.props.hidden}>
                     <Image className="img-loader" alt="null" src={require('../PageLoader/DoubleRing-2.4s-200px.gif')}></Image>
                 </div>
-            </>;
+            </>
     }
 }
 
