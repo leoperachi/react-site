@@ -4,21 +4,17 @@ import AuthConext from '../../contexts/auth';
 import { Outlet } from 'react-router-dom';
 import PageLoader from '../../components/PageLoader/PageLoader';
 import ChatWindow from "../../components/ChatWindow/ChatWindow";
+import SocketContext from "../../contexts/socket";
 
 const Layout = (props) => {
     const inputRef = React.useRef(null);
-    const { 
-        user, 
-        signOut, 
-        connectSocket, 
-        getUsersChat,
-        sendMsg } = useContext(AuthConext);
+    const { user, signOut } = useContext(AuthConext);
+    const { connect, getUsers, sendMsg } = useContext(SocketContext);
     const [hidden, sethidden] = useState(true);
     const [usersLoaded, setUsersLoaded] = useState(false);
     const [usersChat, setUsersChat] = useState([]);
     const [hiddenCW, sethiddenCW] = useState(true);
     const [usrDstCW, setusrDstCW] = useState('');
-    connectSocket(); //Dps de autenticado inicia o Socket
 
     const handle = () => {
         signOut();
@@ -36,9 +32,9 @@ const Layout = (props) => {
     };
 
     const loadUsersChat = (e) => {
-        e.preventDefault();
         if(!usersLoaded){
-            getUsersChat().then((users) => {
+            connect(); //Dps de autenticado inicia o Socket
+            getUsers(user.id).then((users) => {
                 //console.log(users);
                 setUsersChat(users);
             });

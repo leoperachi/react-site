@@ -12,6 +12,10 @@ import { Link } from "react-router-dom";
 import ProfilePhoto from '../ProfilePhoto/ProfilePhoto';
 
 class NavBar extends React.Component  {
+  componentDidMount(){
+    this.props.loadUsersChat();
+    console.log('load');
+  }
   render() {
     return <>
       <Navbar expand={false} collapseOnSelect>
@@ -39,7 +43,7 @@ class NavBar extends React.Component  {
                   </Nav.Link>
                 </Nav.Item>
                 <Accordion style={{marginTop:'4px'}}>
-                  <Accordion.Item eventKey="1" onClick={this.props.loadUsersChat}>
+                  <Accordion.Item eventKey="1">
                     <Accordion.Header>Chat Users</Accordion.Header>
                     <Accordion.Body style={{padding: '0px'}}>
                         {this.props.usersChat.map((usr, i) => 

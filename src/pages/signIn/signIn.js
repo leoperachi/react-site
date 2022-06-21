@@ -23,7 +23,7 @@ function SignIn() {
   function handleSigIn() {
       sethidden(false);
       signIn(data.username, data.password).then((user)=> {
-        console.log(user);
+        //console.log(user);
       }).catch((err) => {
           sethiddenAlert(false);
           setMsg(err.message);
