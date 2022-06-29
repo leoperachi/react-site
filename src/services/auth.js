@@ -43,10 +43,15 @@ export function uploadProfilePhoto(userId, picture){
 
 export function updateProfileInfo(user){
     return new Promise((resolve, reject) => {
-        console.log(user);
         api.post('/updateProfileInfo', 
             {   
-                userId: user._id
+                'userId': user.id,
+                'userName': user.username,
+                'firstName': user.firstName,
+                'lastName': user.lastName,
+                'city': user.city,
+                'state': user.state,
+                'zip': user.zipCode
             }
         ).then((response) => {
             resolve(response.data);

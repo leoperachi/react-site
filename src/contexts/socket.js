@@ -12,7 +12,7 @@ export const SocketProvider = ({ children }) => {
             connect() {
                 socket = socketio.connect(config.apiAddr, { transports : ['websocket'] });
                 socket.on('connect', ()=> {
-                    console.log('Socket Connected');
+                    //console.log('Socket Connected');
                 });
                 socket.on('connect_error', err => {
                     console.log('connect_error: ' + err);

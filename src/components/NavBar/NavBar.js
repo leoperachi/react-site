@@ -14,7 +14,6 @@ import ProfilePhoto from '../ProfilePhoto/ProfilePhoto';
 class NavBar extends React.Component  {
   componentDidMount(){
     this.props.loadUsersChat();
-    console.log('load');
   }
   render() {
     return <>
@@ -48,17 +47,19 @@ class NavBar extends React.Component  {
                     <Accordion.Body style={{padding: '0px'}}>
                         {this.props.usersChat.map((usr, i) => 
                           <div style={{
-                              paddingTop: '12px', 
-                              paddingBottom: '12px', 
                               textAlign: '-webkit-center',
-                              boxShadow: 'inset 0 -1px 0 rgb(0 0 0 / 13%)' 
+                              boxShadow: 'inset 0 -1px 0 rgb(0 0 0 / 13%)'
                             }} key={usr._id}>
-                              <Nav.Item>
-                                {/* <ProfilePhoto user={usr} width={30} height={30} style={{position: 'absolute'}}></ProfilePhoto> */}
-                                <Nav.Link eventKey="3" as={Button} onClick={this.props.onStartChat}
-                                  style={{background:'transparent', borderColor: 'white'}}>
-                                    {usr.email}
-                                </Nav.Link>
+                              <Nav.Item style={{ display:'flex', flexDirection: 'row', height:60, alignItems:'center'}}>
+                                <div style={{paddingLeft:20, paddingRight: 20}}>
+                                  <ProfilePhoto user={usr} width={40} height={40}></ProfilePhoto>
+                                </div>
+                                <div>
+                                  <Nav.Link eventKey="3" as={Button} onClick={this.props.onStartChat}
+                                    style={{background:'transparent', borderColor: 'white'}}>
+                                      {usr.email}
+                                  </Nav.Link>
+                                </div>
                               </Nav.Item>
                           </div>
                         )}

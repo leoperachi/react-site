@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import PageLoader from '../../components/PageLoader/PageLoader';
 import { Form, Button, Row, Col, InputGroup } from 'react-bootstrap';
 import AuthConext from '../../contexts/auth';
@@ -12,7 +12,17 @@ function Profile() {
   const { user, uploadProfilePhoto, updateProfileInfo } = useContext(AuthConext);
   const [hiddenAlert, sethiddenAlert] = useState(true);
   const [msg, setMsg] = useState('');
-
+  const [hasChange, setHasChange] = useState(false);
+  const [data, setData] = React.useState({
+    id: user.id,
+    username: user.userName ? user.userName : '',
+    firstName: user.firstName ? user.firstName : '',
+    lastName: user.lastName ? user.lastName : '',
+    city: user.city ? user.city : '',
+    state: user.state ? user.state : '',
+    zipCode: user.zipCode ? user.zipCode : '',
+  });
+  
   const handleSubmit = (event) => {
     sethidden(false);
     const form = event.currentTarget;
@@ -21,23 +31,21 @@ function Profile() {
       sethidden(true);
     }
     else{
-      setTimeout(()=>{
-        sethidden(true);
-        updateProfileInfo(user).then((response) => {
+      if(hasChange){
+        updateProfileInfo(data).then((response) => {
 
         }).catch((err) => {
           sethiddenAlert(false);
           setMsg(err.message);
           setTimeout(() => {
             sethiddenAlert(true);
-            sethidden(true);
           }, 3000);
         }).then(()=>{
           setTimeout(()=>{
             sethidden(true);
           }, 1000);
         })
-      }, 2000)
+      }
     }
 
     event.preventDefault();
@@ -61,7 +69,6 @@ function Profile() {
         setMsg(err.message);
         setTimeout(() => {
           sethiddenAlert(true);
-          sethidden(true);
         }, 3000);
       }).then(() => {
         setTimeout(()=>{
@@ -70,6 +77,53 @@ function Profile() {
       });
     };
   };
+
+  const dataChange = (id, val) => {
+    switch(id){
+      default:
+        setData({
+            ...data,
+            username: val,
+        });
+        setHasChange(true);
+        break;
+      case 'txtFirstName':
+        setData({
+            ...data,
+            firstName: val,
+        });
+        setHasChange(true);
+        break;
+      case 'txtLastName':
+        setData({
+            ...data,
+            lastName: val,
+        });
+        setHasChange(true);
+        break;
+      case 'txtCity':
+        setData({
+            ...data,
+            city: val,
+        });
+        setHasChange(true);
+        break;
+      case 'txtState':
+        setData({
+            ...data,
+            state: val,
+        });
+        setHasChange(true);
+        break;
+      case 'txtZipcode':
+        setData({
+            ...data,
+            zipCode: val,
+        });
+        setHasChange(true);
+        break;
+    }
+  }
 
   return (
     <>
@@ -85,54 +139,45 @@ function Profile() {
                 <Row className="mb-2">
                   <Col md='8'>
                     <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      disabled={true}
-                      type="text"
-                      placeholder="Email" value={user.email}
-                    />
+                    <Form.Control disabled={true} type="text" placeholder="Email" value={user.email} />
                   </Col>
                   <Col md='4'>
                     <Form.Label>Username</Form.Label>
                     <InputGroup>
                       <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                        <Form.Control
-                          type="text" value={user.username}
-                          placeholder="Username"
-                          aria-describedby="inputGroupPrepend"
-                        />
+                        <Form.Control type="text" value={data.username} placeholder="Username" 
+                          aria-describedby="inputGroupPrepend" id='txtUserName'
+                          onChange={e => dataChange(e.target.id, e.target.value)} />
                     </InputGroup>
                   </Col>
                 </Row>
                 <Row className="mb-2">
                   <Col md='6'>
                     <Form.Label>First name</Form.Label>
-                    <Form.Control
-                      type="text" value={user.firstName}
-                      placeholder="First name"
-                    />
+                    <Form.Control type="text" value={data.firstName} placeholder="First name"
+                      onChange={e => dataChange(e.target.id, e.target.value)} id='txtFirstName' />
                   </Col>
                   <Col md='6'>
                     <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                      type="text" value={user.lastName}
-                      placeholder="Last name"
-                    />
+                    <Form.Control type="text" value={data.lastName} placeholder="Last name"
+                      onChange={e => dataChange(e.target.id, e.target.value)} id='txtLastName' />
                   </Col>
                 </Row>
                 <Row className="mb-3">
                   <Col md='6'>
                     <Form.Label>City</Form.Label>
-                    <Form.Control type="text" placeholder="City" />  
+                    <Form.Control type="text" value={data.city} placeholder="City" id='txtCity'
+                      onChange={e => dataChange(e.target.id, e.target.value)} />  
                   </Col>
                   <Col md="3">
                     <Form.Label>State</Form.Label>
-                    <Form.Control type="text" 
-                      value={user.state} placeholder="State" />
+                    <Form.Control type="text" value={data.state} placeholder="State" id='txtState'
+                      onChange={e => dataChange(e.target.id, e.target.value)} />
                   </Col>
                   <Col md="3">
                     <Form.Label>Zip</Form.Label>
-                    <Form.Control type="text" 
-                      value={user.zipCode} placeholder="Zip" />
+                    <Form.Control type="text" value={data.zipCode} placeholder="Zip" id='txtZipcode'
+                      onChange={e => dataChange(e.target.id, e.target.value)} />
                   </Col>
                 </Row>
                 <Row className="mb-1">

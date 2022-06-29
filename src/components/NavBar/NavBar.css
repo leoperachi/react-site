@@ -69,6 +69,7 @@
 
 .nav-item {
   height: 40px;
+  align-items: center;
 }
 
 .nav-links {
