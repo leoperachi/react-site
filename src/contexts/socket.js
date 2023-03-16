@@ -2,9 +2,9 @@ import React, { createContext, useContext }  from 'react';
 import socketio from 'socket.io-client';
 import config from "../config";
 import AuthConext from './auth';
-import moment from 'moment';
+import axios from 'axios';
 
-const   SocketContext = createContext();
+const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
     var socket = null;
@@ -14,9 +14,13 @@ export const SocketProvider = ({ children }) => {
             connect() {
                 socket = socketio.connect(config.apiAddr, { transports : ['websocket'] });
                 socket.on('connect', ()=> {
-                    console.log('Socket Connected: ' + socket.id);
-                    socket.emit('updateActive', {email: user?.email, socketId: socket.id}, (response: any) => {
-                        console.log(response);
+                    //console.log('Socket Connected: ' + socket.id);
+                    axios.get('https://geolocation-db.com/json/').then(data => {
+                        socket.emit('updateActive', {email: user?.email, socketId: socket.id, ip: data.data.IPv4}, (response: any) => {
+                            console.log(response);
+                        });
+                    }).catch(err => {
+                        console.log(err);
                     });
                 });
                 socket.on('connect_error', err => {

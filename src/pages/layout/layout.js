@@ -34,7 +34,7 @@ const Layout = (props) => {
 
     const loadUsersChat = (e) => {
         if(!usersLoaded){
-            connect(); //Dps de autenticado inicia o Socket
+            //connect(); //Dps de autenticado inicia o Socket
             getUsers(user.id).then((users) => {
                 //console.log(users);
                 setUsersChat(users);
