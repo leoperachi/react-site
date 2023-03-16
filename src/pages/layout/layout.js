@@ -9,13 +9,14 @@ import SocketContext from "../../contexts/socket";
 const Layout = (props) => {
     const inputRef = React.useRef(null);
     const { user, signOut } = useContext(AuthConext);
-    const { connect, getUsers, sendMsg } = useContext(SocketContext);
+    const { connect, getUsers, sendMsg, getMsgs } = useContext(SocketContext);
     const [hidden, sethidden] = useState(true);
     const [usersLoaded, setUsersLoaded] = useState(false);
     const [usersChat, setUsersChat] = useState([]);
     const [hiddenCW, sethiddenCW] = useState(true);
     const [usrDstCW, setusrDstCW] = useState('');
-
+    const [messages, setMessages] = useState([]);
+    
     const handle = () => {
         signOut();
     };
@@ -44,9 +45,12 @@ const Layout = (props) => {
     };
 
     const onStartChat = (e) => {
-        e.preventDefault();
         sethiddenCW(false);
-        setusrDstCW(e.target.childNodes[0].nodeValue);
+        var usrDst = e.target.childNodes[0].nodeValue;
+        setusrDstCW(usrDst);
+        getMsgs(usrDst, user.email).then((msgs) => {
+            setMessages(msgs);
+        })
     }
 
     const onCloseCW = () => {
@@ -54,17 +58,8 @@ const Layout = (props) => {
     };
 
     const onSentMsg = (msg, to, dtSent) => {
-        let currentTimestamp = Date.now()
-        let date = new Intl.DateTimeFormat('en-US', 
-        { 
-            year: 'numeric', 
-            month: '2-digit', 
-            day: '2-digit', 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit' 
-        }).format(currentTimestamp);
-
+        let d = new Date();
+        let date = new Date(d.valueOf() - d.getTimezoneOffset() * 60000); //colocando no horario do brasil
         return new Promise((resolve, reject) => {
             sendMsg(user.email, to, msg, date).then((response) => {
                 resolve(response);
@@ -84,6 +79,8 @@ const Layout = (props) => {
             <ChatWindow show={hiddenCW} 
                 usrDst={usrDstCW}
                 onCloseCW={onCloseCW}
+                messages={messages}
+                me={user.email}
                 onSentMsg={onSentMsg}></ChatWindow>
         </>
     );

@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {Text, useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
+import ChatMsg from '../ChatMsg/ChatMsg';
 
 class ChatWindow extends React.Component  {
     onSentMsg = null;
@@ -7,8 +8,10 @@ class ChatWindow extends React.Component  {
     constructor(props){
         super(props);
         this.state = {
-            inputValue: ''
+            inputValue: '',
+            messages: props.messages,
         };
+
         this.onSentMsg = props.onSentMsg;
     }
 
@@ -22,10 +25,16 @@ class ChatWindow extends React.Component  {
     onFormSubmit = (e) => {
         e.preventDefault();
         this.onSentMsg(this.state.inputValue, this.props.usrDst).then((r) =>{
-            console.log(r);
+            this.props.messages.push({
+                from: this.props.me, 
+                to: this.props.usrDst, 
+                msg: this.state.inputValue, 
+                dtSent: Date.now
+            });
+
             this.setState({
-                inputValue: ""
-              });
+                inputValue: "",
+            });
         });
     }
 
@@ -38,7 +47,9 @@ class ChatWindow extends React.Component  {
                                 onClick={this.props.onCloseCW}></i>
                         </div>
                         <div className='chatWindow-msgs'>
-
+                            <div className='imessage'>
+                                {this.props.messages.map((v, i) => <ChatMsg key={'chatMsg_' + this.props.usrDst + '_' + i} origDest={v.from == this.props.me ? 'me' : 'then'} msg={v.msg} /> )}
+                            </div>
                         </div>
                         <div>
                             <Form noValidate style={{display: 'flex'}} onSubmit={this.onFormSubmit}>
@@ -54,5 +65,4 @@ class ChatWindow extends React.Component  {
     }
 }
 
-  
 export default ChatWindow;

@@ -120,7 +120,7 @@ function SignUp() {
   return (
     <>
         <PageLoader hidden={hidden}></PageLoader>
-        <div className="container1">
+        <div className="container2">
         <div className="wrap" style={{width: "450px"}}>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <h3>Register Now!</h3>
