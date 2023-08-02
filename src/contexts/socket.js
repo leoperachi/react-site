@@ -14,7 +14,6 @@ export const SocketProvider = ({ children }) => {
             connect() {
                 socket = socketio.connect(config.apiAddr, { transports : ['websocket'] });
                 socket.on('connect', ()=> {
-                    //console.log('Socket Connected: ' + socket.id);
                     axios.get('https://geolocation-db.com/json/').then(data => {
                         socket.emit('updateActive', {email: user?.email, socketId: socket.id, ip: data.data.IPv4}, (response: any) => {
                             console.log(response);
@@ -28,6 +27,13 @@ export const SocketProvider = ({ children }) => {
                 });
                 socket.on('connect_failed', err => {
                     console.log('connect_failed: ' + err);
+                });
+                socket.on('receiveMsg', (from) => {
+                    document.getElementById('btnToogle').click();
+                    setTimeout(() => {
+                        //abre o chat
+                        document.getElementById('chat_'+ from.from).click();
+                    }, 10);
                 });
             },
             getUsers(userId) {

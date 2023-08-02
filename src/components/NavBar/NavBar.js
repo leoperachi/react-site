@@ -21,7 +21,7 @@ class NavBar extends React.Component  {
         <Navbar.Brand href="/" 
           style={{marginLeft:'15px'}}>React-Site
         </Navbar.Brand>
-        <Navbar.Toggle style={{marginRight:'15px'}} />
+        <Navbar.Toggle style={{marginRight:'15px'}} id="btnToogle" />
         <Navbar.Offcanvas style={{ background:'#f2f2f2' }}
           id={`offcanvasNavbar-expand-${true}`}
           placement="end">
@@ -56,7 +56,7 @@ class NavBar extends React.Component  {
                                 </div>
                                 <div>
                                   <Nav.Link eventKey="3" as={Button} onClick={this.props.onStartChat}
-                                    style={{background:'transparent', borderColor: 'white'}}>
+                                    style={{background:'transparent', borderColor: 'white'}} id={'chat_' + usr.email}>
                                       {usr.email}
                                   </Nav.Link>
                                 </div>

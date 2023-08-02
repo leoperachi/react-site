@@ -72,7 +72,7 @@
   }
   
   p.from-them::after {
-    background-color: #fff;
+    background-color: #555555;
     border-bottom-right-radius: 0.5rem;
     left: 20px;
     transform: translate(-30px, -2px);

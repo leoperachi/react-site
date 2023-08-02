@@ -31,7 +31,7 @@ function SignUp() {
       if(data.isValidUser && data.isValidPassword && data.isValidRetype){
           signUp(data.username, data.password).then((response)=> {
             //response nao vem da outra classe
-            console.log(response);
+            //console.log(response);
             sethiddenAlert(false);
             setMsg(response.message);
             setTimeout(() => {
