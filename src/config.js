@@ -1,3 +1,3 @@
 module.exports = {
-    apiAddr: 'http://15.228.43.3:4000',
+    apiAddr: 'http://18.231.164.159:4000',
 };
