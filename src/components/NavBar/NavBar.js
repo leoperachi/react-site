@@ -28,7 +28,7 @@ class NavBar extends React.Component  {
             <Offcanvas.Header closeButton ></Offcanvas.Header>
             <Offcanvas.Body style={{textAlign:'center'}}>
               <div>
-                <ProfilePhoto width={200} height={200} user={this.props.user} changeImage={this.props.changeFile}/>
+                <ProfilePhoto width={200} height={200} user={this.props.user} changeImage={this.props.changeFile} disabled={false}/>
               </div>
               <Nav className="mr-auto d-block">
                 <Nav.Item>
@@ -52,7 +52,7 @@ class NavBar extends React.Component  {
                             }} key={usr._id}>
                               <Nav.Item style={{ display:'flex', flexDirection: 'row', height:60, alignItems:'center'}}>
                                 <div style={{paddingLeft:20, paddingRight: 20}}>
-                                  <ProfilePhoto user={usr} width={40} height={40}></ProfilePhoto>
+                                  <ProfilePhoto user={usr} width={40} height={40} disabled={true}></ProfilePhoto>
                                 </div>
                                 <div>
                                   <Nav.Link eventKey="3" as={Button} onClick={this.props.onStartChat}

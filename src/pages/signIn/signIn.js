@@ -3,7 +3,8 @@ import { useContext, useState } from "react";
 import AuthConext from "../../contexts/auth";
 import MsgAlert from '../../components/MsgAlert/MsgAlert';
 import PageLoader from '../../components/PageLoader/PageLoader';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, NavLink } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function SignIn() {
   const [validated, setValidated] = useState(false);
@@ -11,6 +12,7 @@ function SignIn() {
   const [hidden, sethidden] = useState(true);
   const [hiddenAlert, sethiddenAlert] = useState(true);
   const [msg, setMsg] = useState('');
+  const [variant, setVariant] = useState('');
   const [data, setData] = React.useState({
        username: '',
        password: '',
@@ -25,6 +27,7 @@ function SignIn() {
       signIn(data.username, data.password).then((user)=> {
         //console.log(user);
       }).catch((err) => {
+          setVariant('danger');
           sethiddenAlert(false);
           setMsg(err.message);
           setTimeout(() => {
@@ -111,6 +114,7 @@ function SignIn() {
                   Please complete password.
                 </Form.Control.Feedback>
               </Form.Group>
+              <NavLink href='/forgotPassword' style={{fontSize: 16}}>Forgot Password</NavLink>
               <br/>
               <div className="d-grid gap-2">
                 <Button variant="primary" size="lg" type="submit">
@@ -122,7 +126,7 @@ function SignIn() {
               </div>
             </Form>
         </div>
-        <MsgAlert msg={msg} show={hiddenAlert}></MsgAlert>
+        <MsgAlert msg={msg} show={hiddenAlert} variant={variant}></MsgAlert>
       </div>
      </>
   );

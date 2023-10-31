@@ -10,6 +10,7 @@ class ProfilePhoto extends React.Component  {
     marginTop = null;
     inputFileRef = null;
     imgRef = null;
+    disabled = null;
     constructor(props) {
       super(props);
       this.user = this.props.user;
@@ -17,6 +18,7 @@ class ProfilePhoto extends React.Component  {
       this.imgRef = React.createRef();
       this.width = props.width;
       this.height = props.height;
+      this.disabled = props.disabled;
       if (props.marginTop) {
           this.marginTop = props.marginTop;
       }
@@ -27,7 +29,9 @@ class ProfilePhoto extends React.Component  {
     
     render() {
       const clickImage = (e) => {
-        this.inputFileRef.current.click();
+        if(!this.disabled){
+          this.inputFileRef.current.click();
+        }
       };
 
       return <>

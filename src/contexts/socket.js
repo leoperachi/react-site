@@ -16,7 +16,7 @@ export const SocketProvider = ({ children }) => {
                 socket.on('connect', ()=> {
                     axios.get('https://geolocation-db.com/json/').then(data => {
                         socket.emit('updateActive', {email: user?.email, socketId: socket.id, ip: data.data.IPv4}, (response: any) => {
-                            console.log(response);
+                            //console.log(response);
                         });
                     }).catch(err => {
                         console.log(err);

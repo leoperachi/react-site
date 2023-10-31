@@ -129,11 +129,15 @@ function Profile() {
     <>
       <PageLoader hidden={hidden}></PageLoader>
       <div className="container1">
-        <div className="wrapProfile">
+        <div className="wrapProfile" style={{paddingTop:30, paddingLeft: 30}}>
+          <div id='cabecalho'>
+              <h2 style={{paddingLeft:10, paddingBottom:5}}>Profile Info</h2>
+          </div>
+          <br></br>
           <Form noValidate validated={validated} onSubmit={handleSubmit}> 
             <Row className="mb-1">
               <Form.Group className='userProfile' as={Col} md="3">
-                <ProfilePhoto marginTop={30} user={user} changeImage={changeFile}/>
+                <ProfilePhoto marginTop={30} user={user} changeImage={changeFile} disabled={false}/>
               </Form.Group>
               <Col md='9'>
                 <Row className="mb-2">
@@ -180,6 +184,7 @@ function Profile() {
                       onChange={e => dataChange(e.target.id, e.target.value)} />
                   </Col>
                 </Row>
+                <Row style={{paddingTop:10}}></Row>
                 <Row className="mb-1">
                   <div style={{textAlign:'end', paddingTop: '10px'}}>
                     <Button type="submit">Update Profile</Button>

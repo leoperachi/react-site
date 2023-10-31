@@ -49,7 +49,16 @@ export const AuthProvider = ({ children }) => {
     function updateProfileInfo(user){
         return new Promise((resolve, reject) => {
             auth.updateProfileInfo(user).then((response) => {
-                //console.log(response);
+                resolve(response);
+            }).catch((error) => {
+                reject(error)
+            });
+        });
+    }
+
+    function forgotPassword(email){
+        return new Promise((resolve, reject) => {
+            auth.forgotPassword(email).then((response) => {
                 resolve(response);
             }).catch((error) => {
                 reject(error)
@@ -66,6 +75,7 @@ export const AuthProvider = ({ children }) => {
                 signUp: signUp,
                 uploadProfilePhoto: uploadProfilePhoto,
                 updateProfileInfo: updateProfileInfo,
+                forgotPassword: forgotPassword
             }}>
             {children}
         </AuthConext.Provider>

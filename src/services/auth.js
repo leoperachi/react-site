@@ -60,3 +60,7 @@ export function updateProfileInfo(user){
         });
     });
 }
+
+export function forgotPassword(email){
+    
+}

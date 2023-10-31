@@ -11,6 +11,7 @@ function SignUp() {
   const [hidden, sethidden] = useState(true);
   const [hiddenAlert, sethiddenAlert] = useState(true);
   const [msg, setMsg] = useState('');
+  const [variant, setVariant] = useState('');
   const [data, setData] = React.useState({
     username: '',
     password: '',
@@ -30,14 +31,14 @@ function SignUp() {
     else{
       if(data.isValidUser && data.isValidPassword && data.isValidRetype){
           signUp(data.username, data.password).then((response)=> {
-            //response nao vem da outra classe
-            //console.log(response);
+            setVariant('success');
             sethiddenAlert(false);
             setMsg(response.message);
             setTimeout(() => {
               sethiddenAlert(true);
             }, 3000);
           }).catch((err) => {
+            setVariant('danger');
             sethiddenAlert(false);
             sethidden(true);
             setMsg(err.message);
@@ -52,6 +53,7 @@ function SignUp() {
         
       }
       else if(!data.isValidRetype){
+        setVariant('danger');
         sethiddenAlert(false);
         setMsg('Password doesn´t match');
         sethidden(true);
@@ -159,7 +161,7 @@ function SignUp() {
               </div>
           </Form>
         </div>
-        <MsgAlert msg={msg} show={hiddenAlert}></MsgAlert>
+        <MsgAlert msg={msg} show={hiddenAlert} variant={variant}></MsgAlert>
       </div>
      </>
   );
